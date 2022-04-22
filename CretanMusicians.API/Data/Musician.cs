@@ -11,6 +11,9 @@ namespace CretanMusicians.API.Data
         public string Name { get; set; }
 
         [Required]
+        public string Surname { get; set; }
+
+        [Required]
         [ForeignKey(nameof(OriginId))]
         public int OriginId { get; set; }
         public Origin Origin { get; set; }

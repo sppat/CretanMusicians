@@ -22,6 +22,7 @@ builder.Services.AddAutoMapper(typeof(MapperConfig));
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IOriginsRepository, OriginsRepository>();
 builder.Services.AddScoped<IInstrumentsRepository, InstrumentsRepository>();
+builder.Services.AddScoped<IMusiciansRepository, MusiciansRepository>();
 
 builder.Services.AddCors(options =>
 {
