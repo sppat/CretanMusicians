@@ -2,7 +2,7 @@
 
 namespace CretanMusicians.API.Contracts
 {
-    public interface IOriginsRepository : IGenericRepository<Origin>
+    public interface IInstrumentsRepository : IGenericRepository<Instrument>
     {
         bool Exists(string name);
     }

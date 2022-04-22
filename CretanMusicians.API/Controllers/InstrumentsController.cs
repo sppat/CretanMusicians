@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CretanMusicians.API.Contracts;
 using CretanMusicians.API.Data;
 using CretanMusicians.API.Models.InstrumentDto;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +11,12 @@ namespace CretanMusicians.API.Controllers
     [ApiController]
     public class InstrumentsController : ControllerBase
     {
-        private readonly CretanMusiciansDbContext _context;
+        private readonly IInstrumentsRepository _instrumentsRepository;
         private readonly IMapper _mapper;
 
-        public InstrumentsController(CretanMusiciansDbContext context, IMapper mapper)
+        public InstrumentsController(IInstrumentsRepository instrumentsRepository, IMapper mapper)
         {
-            _context = context;
+            _instrumentsRepository = instrumentsRepository;
             _mapper = mapper;
         }
 
@@ -23,7 +24,7 @@ namespace CretanMusicians.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<GetInstrumentsDto>>> GetInstruments()
         {
-            var instruments = await _context.Instruments.ToListAsync();
+            var instruments = await _instrumentsRepository.GetAllAsync();
             var records = _mapper.Map<List<GetInstrumentsDto>>(instruments);
 
             return records;
@@ -33,7 +34,7 @@ namespace CretanMusicians.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<InstrumentDto>> GetInstruments(int id)
         {
-            var instrument = await _context.Instruments.FindAsync(id);
+            var instrument = await _instrumentsRepository.GetAsync(id);
             var record = _mapper.Map<InstrumentDto>(instrument);
 
             return record;
@@ -44,14 +45,13 @@ namespace CretanMusicians.API.Controllers
         public async Task<ActionResult> PostInstruments(InstrumentDto instrumentDto)
         {
             var record = _mapper.Map<Instrument>(instrumentDto);
-            var recordExists = await _context.Instruments.AnyAsync(i => i.Name == record.Name);
+            var recordExists = _instrumentsRepository.Exists(record.Name);
             if (recordExists)
             {
                 return NotFound("Instrument already exists.");
             }
 
-            _context.Instruments.Add(record);
-            await _context.SaveChangesAsync();
+            await _instrumentsRepository.AddAsync(record);
 
             return Ok();
         }
@@ -65,7 +65,7 @@ namespace CretanMusicians.API.Controllers
                 return BadRequest();
             }
 
-            var record = await _context.Instruments.FindAsync(id);
+            var record = await _instrumentsRepository.GetAsync(id);
 
             if (record == null)
             {
@@ -76,11 +76,11 @@ namespace CretanMusicians.API.Controllers
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _instrumentsRepository.UpdateAsync(record);
             }
             catch (DbUpdateConcurrencyException)
             {
-                var recordExists = _context.Instruments.Any(i => i.Id == record.Id);
+                var recordExists = await _instrumentsRepository.Exists(id);
                 if (!recordExists)
                 {
                     return NotFound("Record does not exists.");
@@ -98,14 +98,13 @@ namespace CretanMusicians.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteInstrument(int id)
         {
-            var record = await _context.Instruments.FindAsync(id);
+            var record = await _instrumentsRepository.GetAsync(id);
             if (record == null)
             {
                 return NotFound();
             }
 
-            _context.Instruments.Remove(record);
-            await _context.SaveChangesAsync();
+            await _instrumentsRepository.DeleteAsync(id);
 
             return Ok();
         }

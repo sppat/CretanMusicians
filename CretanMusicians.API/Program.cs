@@ -1,5 +1,7 @@
 using CretanMusicians.API.Configurations;
+using CretanMusicians.API.Contracts;
 using CretanMusicians.API.Data;
+using CretanMusicians.API.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +16,13 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<CretanMusiciansDbContext>(options =>
     options.UseSqlServer(connectionString));
+
 builder.Services.AddAutoMapper(typeof(MapperConfig));
+
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IOriginsRepository, OriginsRepository>();
+builder.Services.AddScoped<IInstrumentsRepository, InstrumentsRepository>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",

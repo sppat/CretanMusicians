@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CretanMusicians.API.Contracts;
 using CretanMusicians.API.Data;
 using CretanMusicians.API.Models.OriginDto;
 using Microsoft.AspNetCore.Mvc;
@@ -10,19 +11,19 @@ namespace CretanMusicians.API.Controllers
     [ApiController]
     public class OriginsController : ControllerBase
     {
-        private readonly CretanMusiciansDbContext _context;
+        private readonly IOriginsRepository _originsRepository;
         private readonly IMapper _mapper;
-        public OriginsController(CretanMusiciansDbContext context, IMapper mapper)
+        public OriginsController(IMapper mapper, IOriginsRepository originsRepository)
         {
-            _context = context;
             _mapper = mapper;
+            _originsRepository = originsRepository;
         }
 
         // GET /api/origins/
         [HttpGet]
         public async Task<ActionResult<List<GetOriginsDto>>> GetOrigins()
         {
-            var origins = await _context.Origins.ToListAsync();
+            var origins = await _originsRepository.GetAllAsync();
             var records = _mapper.Map<List<GetOriginsDto>>(origins);
 
             return records;
@@ -32,7 +33,7 @@ namespace CretanMusicians.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<OriginDto>> GetOrigin(int id)
         {
-            var origin = await _context.Origins.FindAsync(id);
+            var origin = await _originsRepository.GetAsync(id);
             if (origin == null)
             {
                 return NotFound();
@@ -48,14 +49,12 @@ namespace CretanMusicians.API.Controllers
         public async Task<ActionResult> PostOrigin(PostOriginsDto originDto)
         {
             var origin = _mapper.Map<Origin>(originDto);
-            if (RecordExists(originDto.Name))
+            if (_originsRepository.Exists(origin.Name))
             {
                 return BadRequest();
             }
 
-            _context.Origins.Add(origin);
-
-            await _context.SaveChangesAsync();
+            await _originsRepository.AddAsync(origin);
 
             return Ok();
         }
@@ -69,7 +68,7 @@ namespace CretanMusicians.API.Controllers
                 return BadRequest();
             }
 
-            var record = await _context.Origins.FindAsync(id);
+            var record = await _originsRepository.GetAsync(id);
 
             if (record == null)
             {
@@ -80,11 +79,11 @@ namespace CretanMusicians.API.Controllers
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _originsRepository.UpdateAsync(record);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RecordExists(id))
+                if (!await _originsRepository.Exists(id))
                 {
                     return NotFound();
                 }
@@ -101,26 +100,15 @@ namespace CretanMusicians.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteOrigin(int id)
         {
-            var origin = await _context.Origins.FindAsync(id);
+            var origin = await _originsRepository.GetAsync(id);
             if (origin == null)
             {
                 return NotFound();
             }
 
-            _context.Origins.Remove(origin);
-            await _context.SaveChangesAsync();
+            _originsRepository.DeleteAsync(id);
 
             return NoContent();
-        }
-
-        private bool RecordExists(string name)
-        {
-            return _context.Origins.Any(elem => elem.Name == name);
-        }
-
-        private bool RecordExists(int id)
-        {
-            return _context.Origins.Any(elem => elem.Id == id);
         }
     }
 }
