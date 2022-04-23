@@ -2,6 +2,7 @@
 using CretanMusicians.API.Contracts;
 using CretanMusicians.API.Data;
 using CretanMusicians.API.Models.MusicianDto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,6 +49,7 @@ namespace CretanMusicians.API.Controllers
 
         // POST /api/musicians/
         [HttpPost]
+        [Authorize(Roles = "Administrator, User")]
         public async Task<ActionResult<CreateMusicianDto>> CreateMusician(CreateMusicianDto createMusicianDto)
         {
             var recordExists = await _musiciansRepository.Exists(createMusicianDto.Name);
@@ -64,6 +66,7 @@ namespace CretanMusicians.API.Controllers
 
         // PUT /api/musicians/1
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrator, User")]
         public async Task<ActionResult> PutMusician(int id, UpdateMusicianDto updateMusicianDto)
         {
             if (id != updateMusicianDto.Id)
@@ -101,6 +104,7 @@ namespace CretanMusicians.API.Controllers
 
         // DELETE /api/musicians/1
         [HttpDelete]
+        [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> DeleteMusician(int id)
         {
             var record = await _musiciansRepository.GetAsync(id);

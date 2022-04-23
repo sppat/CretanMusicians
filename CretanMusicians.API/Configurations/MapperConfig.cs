@@ -3,6 +3,7 @@ using CretanMusicians.API.Data;
 using CretanMusicians.API.Models.InstrumentDto;
 using CretanMusicians.API.Models.MusicianDto;
 using CretanMusicians.API.Models.OriginDto;
+using CretanMusicians.API.Models.Users;
 
 namespace CretanMusicians.API.Configurations
 {
@@ -25,6 +26,9 @@ namespace CretanMusicians.API.Configurations
             CreateMap<Musician, MusicianDto>().ReverseMap();
             CreateMap<Musician, CreateMusicianDto>().ReverseMap();
             CreateMap<Musician, UpdateMusicianDto>().ReverseMap();
+
+            // Authentication Map
+            CreateMap<ApiUser, ApiUserDto>().ReverseMap();
         }
     }
 }

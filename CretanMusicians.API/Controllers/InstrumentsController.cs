@@ -2,6 +2,7 @@
 using CretanMusicians.API.Contracts;
 using CretanMusicians.API.Data;
 using CretanMusicians.API.Models.InstrumentDto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,6 +43,7 @@ namespace CretanMusicians.API.Controllers
 
         // POST /instruments/
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> PostInstruments(InstrumentDto instrumentDto)
         {
             var record = _mapper.Map<Instrument>(instrumentDto);
@@ -58,6 +60,7 @@ namespace CretanMusicians.API.Controllers
 
         // PUT /instruments/1
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> UpdateInstrument(int id, UpdateInstrumentDto instrumentDto)
         {
             if (id != instrumentDto.Id)
@@ -96,6 +99,7 @@ namespace CretanMusicians.API.Controllers
 
         // DELETE /api/instruments/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> DeleteInstrument(int id)
         {
             var record = await _instrumentsRepository.GetAsync(id);

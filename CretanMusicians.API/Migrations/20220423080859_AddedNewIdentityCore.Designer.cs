@@ -4,6 +4,7 @@ using CretanMusicians.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CretanMusicians.API.Migrations
 {
     [DbContext(typeof(CretanMusiciansDbContext))]
-    partial class CretanMusiciansDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220423080859_AddedNewIdentityCore")]
+    partial class AddedNewIdentityCore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,10 +73,6 @@ namespace CretanMusicians.API.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -189,22 +187,6 @@ namespace CretanMusicians.API.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "76773e62-97ec-4d05-96d7-91941175640d",
-                            ConcurrencyStamp = "553fde9c-60db-493c-865a-caaceb9cf23a",
-                            Name = "Administator",
-                            NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = "b009e843-f87b-4b41-9d78-dcec1e55ee1d",
-                            ConcurrencyStamp = "b8a9e871-6180-4a96-9437-f35da4ee1af4",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

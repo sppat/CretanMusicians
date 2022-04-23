@@ -2,6 +2,7 @@
 using CretanMusicians.API.Contracts;
 using CretanMusicians.API.Data;
 using CretanMusicians.API.Models.OriginDto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,6 +47,7 @@ namespace CretanMusicians.API.Controllers
 
         // POST /api/origins/
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> PostOrigin(PostOriginsDto originDto)
         {
             var origin = _mapper.Map<Origin>(originDto);
@@ -61,6 +63,7 @@ namespace CretanMusicians.API.Controllers
 
         // PUT /api/origins/1
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> PutOrigin(int id, PutOriginsDto putOriginsDto)
         {
             if (id != putOriginsDto.Id)
@@ -98,6 +101,7 @@ namespace CretanMusicians.API.Controllers
 
         // DELETE /api/origins/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> DeleteOrigin(int id)
         {
             var origin = await _originsRepository.GetAsync(id);
