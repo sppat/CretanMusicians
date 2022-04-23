@@ -19,5 +19,26 @@ namespace CretanMusicians.API.Repository
 
             return recordExists;
         }
+
+        public async Task<List<Musician>> GetAllWithDetailsAsync()
+        {
+            var records = await _context.Musicians
+                //.Include(m => m.Instrument)
+                //.Include(o => o.Origin)
+                .ToListAsync();
+
+            return records;
+        }
+
+        public async Task<Musician?> GetWithDetailsAsync(int id)
+        {
+            var record = await _context.Musicians
+            //.Include(m => m.Instrument)
+            //.Include(m => m.Origin)
+            //.FirstOrDefaultAsync(m => m.Id == id);
+              .FindAsync(id);
+
+            return record;
+        }
     }
 }

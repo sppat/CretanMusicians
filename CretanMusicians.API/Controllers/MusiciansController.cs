@@ -24,7 +24,7 @@ namespace CretanMusicians.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MusicianDto>>> GetMusicians()
         {
-            var records = await _musiciansRepository.GetAllAsync();
+            var records = await _musiciansRepository.GetAllWithDetailsAsync();
             var musicians = _mapper.Map<IEnumerable<MusicianDto>>(records);
 
             return Ok(musicians);
