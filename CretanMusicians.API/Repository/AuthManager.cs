@@ -67,7 +67,7 @@ namespace CretanMusicians.API.Repository
 
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(_user, userDto.Role);
+                await _userManager.AddToRoleAsync(_user, "User");
             }
 
             return result.Errors;

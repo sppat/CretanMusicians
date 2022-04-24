@@ -8,7 +8,7 @@ namespace CretanMusicians.API.Models.Users
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        [Required]
-        public string Role { get; set; }
+        //[Required]
+        //public string Role { get; set; }
     }
 }

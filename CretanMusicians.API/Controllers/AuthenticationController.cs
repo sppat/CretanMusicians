@@ -1,5 +1,6 @@
 ﻿using CretanMusicians.API.Contracts;
 using CretanMusicians.API.Models.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CretanMusicians.API.Controllers
@@ -9,10 +10,12 @@ namespace CretanMusicians.API.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthManager _authManager;
+        private readonly ILogger<AuthenticationController> _logger;
 
-        public AuthenticationController(IAuthManager authManager)
+        public AuthenticationController(IAuthManager authManager, ILogger<AuthenticationController> logger)
         {
             _authManager = authManager;
+            _logger = logger;
         }
 
         // POST /api/authentication/register
@@ -21,6 +24,7 @@ namespace CretanMusicians.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize]
         public async Task<ActionResult> Register([FromBody] ApiUserDto apiUserDto)
         {
             var errors = await _authManager.Register(apiUserDto);
