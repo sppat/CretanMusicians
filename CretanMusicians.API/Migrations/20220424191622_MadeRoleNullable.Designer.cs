@@ -4,6 +4,7 @@ using CretanMusicians.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CretanMusicians.API.Migrations
 {
     [DbContext(typeof(CretanMusiciansDbContext))]
-    partial class CretanMusiciansDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220424191622_MadeRoleNullable")]
+    partial class MadeRoleNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,6 +73,10 @@ namespace CretanMusicians.API.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -189,15 +195,15 @@ namespace CretanMusicians.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c51d8848-1d0e-46a9-99f2-d4a5caf58d57",
-                            ConcurrencyStamp = "64c8ef67-9ff3-42df-bbe3-923151e0b834",
-                            Name = "Administrator",
+                            Id = "6e9d0ea2-8df1-4a56-a2f3-0aa795866902",
+                            ConcurrencyStamp = "23ff1464-8e44-4445-af86-f4a38a01e28c",
+                            Name = "Administator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "65fe4fab-7172-4fe5-8b74-85525d3e84f7",
-                            ConcurrencyStamp = "c420b98d-0225-4104-91d9-f4b5e1dfed0f",
+                            Id = "34b281cc-738c-441a-8956-eb2de0a926e6",
+                            ConcurrencyStamp = "aca23fd5-84b0-47cd-a964-9efc568d3629",
                             Name = "User",
                             NormalizedName = "USER"
                         });

@@ -24,7 +24,6 @@ namespace CretanMusicians.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Authorize]
         public async Task<ActionResult> Register([FromBody] ApiUserDto apiUserDto)
         {
             var errors = await _authManager.Register(apiUserDto);

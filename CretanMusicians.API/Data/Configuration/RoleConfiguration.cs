@@ -11,7 +11,7 @@ namespace CretanMusicians.API.Data.Configuration
             builder.HasData(
                 new IdentityRole
                 {
-                    Name = "Administator",
+                    Name = "Administrator",
                     NormalizedName = "ADMINISTRATOR"
                 },
                 new IdentityRole

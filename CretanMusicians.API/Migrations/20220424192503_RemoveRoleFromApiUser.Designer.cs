@@ -4,6 +4,7 @@ using CretanMusicians.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CretanMusicians.API.Migrations
 {
     [DbContext(typeof(CretanMusiciansDbContext))]
-    partial class CretanMusiciansDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220424192503_RemoveRoleFromApiUser")]
+    partial class RemoveRoleFromApiUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -189,15 +191,15 @@ namespace CretanMusicians.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c51d8848-1d0e-46a9-99f2-d4a5caf58d57",
-                            ConcurrencyStamp = "64c8ef67-9ff3-42df-bbe3-923151e0b834",
-                            Name = "Administrator",
+                            Id = "84e9cbf8-31aa-409b-95ab-30b4e30297f8",
+                            ConcurrencyStamp = "7505d6e5-fb93-464d-8a3b-6daf41304161",
+                            Name = "Administator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "65fe4fab-7172-4fe5-8b74-85525d3e84f7",
-                            ConcurrencyStamp = "c420b98d-0225-4104-91d9-f4b5e1dfed0f",
+                            Id = "4847a33b-6943-43fb-a84c-aa17afcdcb5c",
+                            ConcurrencyStamp = "a78688bc-1198-43b9-9858-d19f1f2a482f",
                             Name = "User",
                             NormalizedName = "USER"
                         });
