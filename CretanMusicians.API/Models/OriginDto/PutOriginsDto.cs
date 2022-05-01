@@ -1,11 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CretanMusicians.API.Models.OriginDto
+﻿namespace CretanMusicians.API.Models.OriginDto
 {
-    public class PutOriginsDto
+    public class PutOriginsDto : BaseOriginDto
     {
-        public int Id { get; set; }
-        [Required]
-        public string Name { get; set; }
+
     }
 }

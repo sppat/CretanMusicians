@@ -2,6 +2,7 @@
 using CretanMusicians.API.Contracts;
 using CretanMusicians.API.Data;
 using CretanMusicians.API.Models.OriginDto;
+using CretanMusicians.API.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,9 @@ namespace CretanMusicians.API.Controllers
     {
         private readonly IOriginsRepository _originsRepository;
         private readonly IMapper _mapper;
+
+        private const string entity = "Origin";
+
         public OriginsController(IMapper mapper, IOriginsRepository originsRepository)
         {
             _mapper = mapper;
@@ -37,7 +41,7 @@ namespace CretanMusicians.API.Controllers
             var origin = await _originsRepository.GetAsync(id);
             if (origin == null)
             {
-                return NotFound();
+                return NotFound(ResponeMessages.NotFoundMessage(entity));
             }
 
             var record = _mapper.Map<OriginDto>(origin);
@@ -53,12 +57,12 @@ namespace CretanMusicians.API.Controllers
             var origin = _mapper.Map<Origin>(originDto);
             if (_originsRepository.Exists(origin.Name))
             {
-                return BadRequest();
+                return BadRequest(ResponeMessages.AlreadeyExistsMessage(entity));
             }
 
             await _originsRepository.AddAsync(origin);
 
-            return Ok();
+            return Ok(ResponeMessages.SuccessfullyAddedMessage(entity));
         }
 
         // PUT /api/origins/1
@@ -75,7 +79,7 @@ namespace CretanMusicians.API.Controllers
 
             if (record == null)
             {
-                return NotFound();
+                return NotFound(ResponeMessages.NotFoundMessage(entity));
             }
 
             _mapper.Map(putOriginsDto, record);
@@ -88,7 +92,7 @@ namespace CretanMusicians.API.Controllers
             {
                 if (!await _originsRepository.Exists(id))
                 {
-                    return NotFound();
+                    return NotFound(ResponeMessages.NotFoundMessage(entity));
                 }
                 else
                 {
@@ -96,7 +100,7 @@ namespace CretanMusicians.API.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(ResponeMessages.SuccessfullyModifiedMessage(entity));
         }
 
         // DELETE /api/origins/1
@@ -107,12 +111,12 @@ namespace CretanMusicians.API.Controllers
             var origin = await _originsRepository.GetAsync(id);
             if (origin == null)
             {
-                return NotFound();
+                return NotFound(ResponeMessages.NotFoundMessage(entity));
             }
 
-            _originsRepository.DeleteAsync(id);
+            await _originsRepository.DeleteAsync(id);
 
-            return NoContent();
+            return Ok(ResponeMessages.SuccessfullyDeletedMessage(entity));
         }
     }
 }

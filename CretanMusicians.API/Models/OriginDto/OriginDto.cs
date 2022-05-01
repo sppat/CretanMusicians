@@ -1,8 +1,7 @@
 ﻿namespace CretanMusicians.API.Models.OriginDto
 {
-    public class OriginDto
+    public class OriginDto : BaseOriginDto
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+
     }
 }
