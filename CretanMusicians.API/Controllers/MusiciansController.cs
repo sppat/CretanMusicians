@@ -2,6 +2,7 @@
 using CretanMusicians.API.Contracts;
 using CretanMusicians.API.Data;
 using CretanMusicians.API.Models.MusicianDto;
+using CretanMusicians.API.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,10 +39,10 @@ namespace CretanMusicians.API.Controllers
             var recordExists = await _musiciansRepository.Exists(id);
             if (!recordExists)
             {
-                return NotFound("Musician does not exist.");
+                return NotFound(ResponeMessages.NotFoundMessage("Musician"));
             }
 
-            var record = await _musiciansRepository.GetAsync(id);
+            var record = await _musiciansRepository.GetWithDetailsAsync(id);
             var musician = _mapper.Map<MusicianDto>(record);
 
             return Ok(musician);
@@ -55,13 +56,13 @@ namespace CretanMusicians.API.Controllers
             var recordExists = await _musiciansRepository.Exists(createMusicianDto.Name);
             if (recordExists)
             {
-                return BadRequest("Musician already exists.");
+                return BadRequest(ResponeMessages.AlreadeyExistsMessage("Musician"));
             }
 
             var musician = _mapper.Map<Musician>(createMusicianDto);
             await _musiciansRepository.AddAsync(musician);
 
-            return Ok("Musician added succesfully.");
+            return Ok(ResponeMessages.SuccessfullyAddedMessage("Musician"));
         }
 
         // PUT /api/musicians/1
@@ -71,14 +72,14 @@ namespace CretanMusicians.API.Controllers
         {
             if (id != updateMusicianDto.Id)
             {
-                return BadRequest("Provided wrong id.");
+                return BadRequest();
             }
 
             var record = await _musiciansRepository.GetAsync(id);
 
             if (record == null)
             {
-                return NotFound("Musician does not exist");
+                return NotFound(ResponeMessages.NotFoundMessage("Musician"));
             }
 
             _mapper.Map(updateMusicianDto, record);
@@ -91,7 +92,7 @@ namespace CretanMusicians.API.Controllers
             {
                 if (!await _musiciansRepository.Exists(id))
                 {
-                    return NotFound("Musician does not exist.");
+                    return NotFound(ResponeMessages.NotFoundMessage("Musician"));
                 }
                 else
                 {
@@ -99,7 +100,7 @@ namespace CretanMusicians.API.Controllers
                 }
             }
 
-            return Ok("Musician updated successfully.");
+            return Ok(ResponeMessages.SuccessfullyModifiedMessage("Musician"));
         }
 
         // DELETE /api/musicians/1
@@ -110,12 +111,12 @@ namespace CretanMusicians.API.Controllers
             var record = await _musiciansRepository.GetAsync(id);
             if (record == null)
             {
-                return NotFound("No musician found");
+                return NotFound(ResponeMessages.NotFoundMessage("Musician"));
             }
 
             await _musiciansRepository.DeleteAsync(id);
 
-            return Ok("Musician successfully deleted");
+            return Ok(ResponeMessages.SuccessfullyDeletedMessage("Musician"));
         }
     }
 }

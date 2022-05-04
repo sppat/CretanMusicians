@@ -1,7 +1,7 @@
 ﻿namespace CretanMusicians.API.Models.InstrumentDto
 {
-    public class InstrumentDto
+    public class InstrumentDto : BaseInstrumentDto
     {
-        public string Name { get; set; }
+
     }
 }

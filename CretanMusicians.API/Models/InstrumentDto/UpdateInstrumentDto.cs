@@ -1,11 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CretanMusicians.API.Models.InstrumentDto
+﻿namespace CretanMusicians.API.Models.InstrumentDto
 {
-    public class UpdateInstrumentDto
+    public class UpdateInstrumentDto : BaseInstrumentDto
     {
-        public int Id { get; set; }
-        [Required]
-        public string Name { get; set; }
+
     }
 }

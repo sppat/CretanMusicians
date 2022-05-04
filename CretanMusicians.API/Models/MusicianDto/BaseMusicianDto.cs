@@ -9,13 +9,5 @@ namespace CretanMusicians.API.Models.MusicianDto
 
         [Required]
         public string Surname { get; set; }
-
-        [Required]
-        [Range(1, int.MaxValue)]
-        public int OriginId { get; set; }
-
-        [Required]
-        [Range(1, int.MaxValue)]
-        public int InstrumentId { get; set; }
     }
 }

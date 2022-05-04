@@ -23,8 +23,8 @@ namespace CretanMusicians.API.Repository
         public async Task<List<Musician>> GetAllWithDetailsAsync()
         {
             var records = await _context.Musicians
-                //.Include(m => m.Instrument)
-                //.Include(o => o.Origin)
+                .Include(m => m.Instrument)
+                .Include(m => m.Origin)
                 .ToListAsync();
 
             return records;
@@ -33,10 +33,9 @@ namespace CretanMusicians.API.Repository
         public async Task<Musician?> GetWithDetailsAsync(int id)
         {
             var record = await _context.Musicians
-            //.Include(m => m.Instrument)
-            //.Include(m => m.Origin)
-            //.FirstOrDefaultAsync(m => m.Id == id);
-              .FindAsync(id);
+            .Include(m => m.Instrument)
+            .Include(m => m.Origin)
+            .FirstOrDefaultAsync(m => m.Id == id);
 
             return record;
         }

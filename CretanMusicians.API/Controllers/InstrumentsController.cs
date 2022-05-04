@@ -2,6 +2,7 @@
 using CretanMusicians.API.Contracts;
 using CretanMusicians.API.Data;
 using CretanMusicians.API.Models.InstrumentDto;
+using CretanMusicians.API.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,11 @@ namespace CretanMusicians.API.Controllers
         public async Task<ActionResult<InstrumentDto>> GetInstruments(int id)
         {
             var instrument = await _instrumentsRepository.GetAsync(id);
+            if (instrument == null)
+            {
+                return NotFound(ResponeMessages.NotFoundMessage("Instrument"));
+            }
+
             var record = _mapper.Map<InstrumentDto>(instrument);
 
             return record;
@@ -50,12 +56,12 @@ namespace CretanMusicians.API.Controllers
             var recordExists = _instrumentsRepository.Exists(record.Name);
             if (recordExists)
             {
-                return NotFound("Instrument already exists.");
+                return NotFound(ResponeMessages.AlreadeyExistsMessage("Instrument"));
             }
 
             await _instrumentsRepository.AddAsync(record);
 
-            return Ok();
+            return Ok(ResponeMessages.SuccessfullyAddedMessage("Instrument"));
         }
 
         // PUT /instruments/1
@@ -72,7 +78,7 @@ namespace CretanMusicians.API.Controllers
 
             if (record == null)
             {
-                return NotFound("Instrument does not exists.");
+                return NotFound(ResponeMessages.NotFoundMessage("Instrument"));
             }
 
             _mapper.Map(instrumentDto, record);
@@ -86,7 +92,7 @@ namespace CretanMusicians.API.Controllers
                 var recordExists = await _instrumentsRepository.Exists(id);
                 if (!recordExists)
                 {
-                    return NotFound("Record does not exists.");
+                    return NotFound(ResponeMessages.NotFoundMessage("Instrument"));
                 }
                 else
                 {
@@ -94,7 +100,7 @@ namespace CretanMusicians.API.Controllers
                 }
             }
 
-            return Ok();
+            return Ok(ResponeMessages.SuccessfullyModifiedMessage("Instrument"));
         }
 
         // DELETE /api/instruments/1
@@ -105,12 +111,12 @@ namespace CretanMusicians.API.Controllers
             var record = await _instrumentsRepository.GetAsync(id);
             if (record == null)
             {
-                return NotFound();
+                return NotFound(ResponeMessages.NotFoundMessage("Instrument"));
             }
 
             await _instrumentsRepository.DeleteAsync(id);
 
-            return Ok();
+            return Ok(ResponeMessages.SuccessfullyDeletedMessage("Instrument"));
         }
     }
 }

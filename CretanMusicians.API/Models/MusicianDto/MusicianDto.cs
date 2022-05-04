@@ -3,7 +3,7 @@
     public class MusicianDto : BaseMusicianDto
     {
         public int Id { get; set; }
-        //public Origin origin { get; set; }
-        //public Instrument instrument { get; set; }
+        public string Origin { get; set; }
+        public string Instrument { get; set; }
     }
 }

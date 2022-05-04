@@ -1,14 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CretanMusicians.API.Data
+namespace CretanMusicians.API.Models.InstrumentDto
 {
-    public class Origin
+    public class BaseInstrumentDto
     {
+        [Required]
         public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
-
-        public IList<Musician> Musicians { get; set; }
     }
 }

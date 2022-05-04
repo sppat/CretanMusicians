@@ -23,7 +23,14 @@ namespace CretanMusicians.API.Configurations
             CreateMap<Instrument, UpdateInstrumentDto>().ReverseMap();
 
             // Musician Map
-            CreateMap<Musician, MusicianDto>().ReverseMap();
+            CreateMap<Musician, MusicianDto>()
+                .ForMember(dest =>
+                    dest.Origin,
+                    opt => opt.MapFrom(src => src.Origin.Name))
+                .ForMember(dest =>
+                    dest.Instrument,
+                    opt => opt.MapFrom(src => src.Instrument.Name))
+                .ReverseMap();
             CreateMap<Musician, CreateMusicianDto>().ReverseMap();
             CreateMap<Musician, UpdateMusicianDto>().ReverseMap();
 

@@ -9,6 +9,6 @@ namespace CretanMusicians.API.Data
         [Required]
         public string Name { get; set; }
 
-        public virtual IList<Musician> Musicians { get; set; }
+        public IList<Musician> Musicians { get; set; }
     }
 }
