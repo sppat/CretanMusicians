@@ -10,4 +10,9 @@
     <ProjectReference Include="..\CretanMusicians.Domain\CretanMusicians.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="LanguageExt.Core" Version="4.4.6" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
+  </ItemGroup>
+
 </Project>

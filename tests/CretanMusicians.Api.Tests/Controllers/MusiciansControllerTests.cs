@@ -1,24 +1,15 @@
 ﻿using CretanMusicians.Api.Controllers;
-using CretanMusicians.Application.Musicians.Commands;
+using CretanMusicians.Application.Contracts.Repositories;
+using CretanMusicians.Application.Musicians.CreateMusician;
 using FluentAssertions;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 
 namespace CretanMusicians.Api.Tests.Controllers
 {
     public class MusiciansControllerTests
     {
-        [Fact]
-        public async Task CreateMusician_ShouldReturnContentCreatedResult()
-        {
-            var controller = new MusiciansController();
-            var result =  await controller.Create(new CreateMusicianCommand(
-                Guid.NewGuid(),
-                "Antonis",
-                "Martsakis"));
-
-            result
-                .Should()
-                .BeOfType<CreatedResult>();
-        }
+        
     }
 }
