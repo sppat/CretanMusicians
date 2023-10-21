@@ -1,4 +1,3 @@
-using System.Data;
 using CretanMusicians.Domain.ValidationErrorsMessages;
 using FluentValidation;
 
@@ -8,7 +7,7 @@ public sealed class GetOneMusicianValidator : AbstractValidator<GetOneMusicianQu
 {
     public GetOneMusicianValidator()
     {
-        RuleFor(getOneMusicianQuery => getOneMusicianQuery.MusicianId)
+        RuleFor(query => query.MusicianId)
             .Must(musicianId => musicianId != Guid.Empty)
             .WithMessage(MusiciansValidateErrors.EmptyMusicianIdError);
     }

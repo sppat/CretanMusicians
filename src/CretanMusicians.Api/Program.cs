@@ -1,4 +1,4 @@
-using CretanMusicians.Application;
+using CretanMusicians.Api;
 using CretanMusicians.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
-    builder.Services.AddInfrastructure();
+    builder.Services.AddInfrastructure(builder.Configuration);
 }
 
 var app = builder.Build();
@@ -22,6 +22,8 @@ var app = builder.Build();
         app.UseSwaggerUI();
     }
 
+    app.UseExceptionHandler("/error");
+    
     app.UseHttpsRedirection();
 
     app.UseAuthorization();
@@ -29,4 +31,5 @@ var app = builder.Build();
     app.MapControllers();
 }
 
+await app.MigrateAsync();
 app.Run();

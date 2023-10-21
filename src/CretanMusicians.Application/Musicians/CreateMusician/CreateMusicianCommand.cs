@@ -1,8 +1,8 @@
-﻿using CretanMusicians.Domain.Entities;
-using LanguageExt.Common;
+﻿using CretanMusicians.Application.Contracts.Dto.MusicianDto;
+using CretanMusicians.Domain.Exceptions;
 using MediatR;
 
 namespace CretanMusicians.Application.Musicians.CreateMusician
 {
-    public record CreateMusicianCommand(Guid InstrumentId, string FirstName, string LastName) : IRequest<Result<Musician>>;
+    public record CreateMusicianCommand(string InstrumentName, string FirstName, string LastName) : IRequest<Result<MusicianDetailsDto>>;
 }
