@@ -1,9 +1,9 @@
 using CretanMusicians.Domain.Exceptions;
-using CretanMusicians.Domain.ValidationErrorsMessages;
 using CretanMusicians.Domain.ValueObjects;
 using FluentAssertions;
+using Xunit;
 
-namespace CretanMusicians.Application.Tests.Musicians;
+namespace CretanMusicians.Domain.Tests.MusicianTests;
 
 public class MusicianIdTests
 {
