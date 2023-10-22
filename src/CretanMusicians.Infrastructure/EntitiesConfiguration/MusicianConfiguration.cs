@@ -9,7 +9,7 @@ public class MusicianConfiguration : IEntityTypeConfiguration<Musician>
 {
     public void Configure(EntityTypeBuilder<Musician> builder)
     {
-        builder.HasKey(m => m.Id);
+        builder.HasKey(m => new { m.Id, m.FirstName, m.LastName });
         builder
             .Property(m => m.Id)
             .HasConversion(

@@ -29,16 +29,14 @@ namespace CretanMusicians.Infrastructure.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("first_name");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("last_name");
 
-                    b.HasKey("Id")
+                    b.HasKey("Id", "FirstName", "LastName")
                         .HasName("pk_musicians");
 
                     b.ToTable("musicians", (string)null);
@@ -52,6 +50,14 @@ namespace CretanMusicians.Infrastructure.Migrations
                                 .HasColumnType("uuid")
                                 .HasColumnName("musician_id");
 
+                            b1.Property<string>("MusicianFirstName")
+                                .HasColumnType("text")
+                                .HasColumnName("musician_first_name");
+
+                            b1.Property<string>("MusicianLastName")
+                                .HasColumnType("text")
+                                .HasColumnName("musician_last_name");
+
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("integer")
@@ -64,14 +70,14 @@ namespace CretanMusicians.Infrastructure.Migrations
                                 .HasColumnType("text")
                                 .HasColumnName("name");
 
-                            b1.HasKey("MusicianId", "Id")
+                            b1.HasKey("MusicianId", "MusicianFirstName", "MusicianLastName", "Id")
                                 .HasName("pk_instruments");
 
                             b1.ToTable("instruments", (string)null);
 
                             b1.WithOwner()
-                                .HasForeignKey("MusicianId")
-                                .HasConstraintName("fk_instruments_musicians_musician_id");
+                                .HasForeignKey("MusicianId", "MusicianFirstName", "MusicianLastName")
+                                .HasConstraintName("fk_instruments_musicians_musician_id_musician_first_name_music");
                         });
 
                     b.Navigation("Instruments");

@@ -1,4 +1,5 @@
 ﻿using CretanMusicians.Api.ApiContracts.MusicianContracts;
+using CretanMusicians.Api.Attributes;
 using CretanMusicians.Application.Contracts.Dto.MusicianDto;
 using CretanMusicians.Application.Contracts.Pagination;
 using CretanMusicians.Application.Musicians.CreateMusician;
@@ -23,6 +24,7 @@ namespace CretanMusicians.Api.Controllers
         }
 
         [HttpGet]
+        [Cache(LifeTimeInMinutes = 3)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -43,6 +45,7 @@ namespace CretanMusicians.Api.Controllers
         }
 
         [HttpGet("{musicianId:guid}", Name = "GetMusician")]
+        [Cache(LifeTimeInMinutes = 3, RouteParameterName = "musicianId")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

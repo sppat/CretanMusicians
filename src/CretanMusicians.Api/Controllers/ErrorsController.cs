@@ -14,6 +14,6 @@ public class ErrorsController : ControllerBase
 
         return exception?.Error is HttpException httpException
             ? Problem(statusCode: (int)httpException.StatusCode, title: httpException.ErrorMessage)
-            : Problem(statusCode: (int)HttpStatusCode.InternalServerError, title: "Oops! Something went wrong.");
+            : Problem(statusCode: (int)HttpStatusCode.InternalServerError, title: GeneralExceptionMessages.InternalServerErrorMessage);
     }
 }

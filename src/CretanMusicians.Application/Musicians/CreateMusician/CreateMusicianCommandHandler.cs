@@ -1,3 +1,4 @@
+using CretanMusicians.Application.Contracts.Cache;
 using CretanMusicians.Application.Contracts.Dto.MusicianDto;
 using CretanMusicians.Application.Contracts.Repositories;
 using CretanMusicians.Domain.Entities;
@@ -42,7 +43,7 @@ public class CreateMusicianCommandHandler : IRequestHandler<CreateMusicianComman
 
         await _unitOfWork.MusicianRepository.AddAsync(musician);
         await _unitOfWork.SaveChangesAsync();
-
+        
         return musician.ToDetailsDto();
     }
 }
