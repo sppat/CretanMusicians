@@ -32,6 +32,9 @@ Before you begin, ensure you have met the following requirements:
 3. Run the project:
     ```sh
     dotnet run --project src/CretanMusicians.Api
+4. Navigate to:
+   ```sh
+   http://localhost:5058/swagger
 Migrations will run automatically.
 ### ToDo
 - Logging
